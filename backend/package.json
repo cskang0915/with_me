@@ -2,5 +2,9 @@
   "dependencies": {
     "express": "^4.17.1",
     "sqlite3": "^4.1.1"
+  },
+  "scripts": {
+  	"init": "node seed.js",
+  	"start": "nodemon index.js"
   }
 }
