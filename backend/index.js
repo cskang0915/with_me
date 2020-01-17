@@ -1,12 +1,12 @@
 let express = require('express')
 let userRouter = require('./routes/user')
-// let entryRouter = require('./routes/entry')
+let entryRouter = require('./routes/entry')
 
 let app = express()
 app.use(express.json())
 
 app.use('/api/user', userRouter)
-// app.use('/api/entry', entryRouter)
+app.use('/api/entry', entryRouter)
 
 
 app.get('/', (req, res)=>{

@@ -5,7 +5,7 @@ db.serialize(()=>{
 	const dropTableEntry = 'DROP TABLE entry'
 	const dropTableMapInfo = 'DROP TABLE map'
 	const createTableUser = 'CREATE TABLE IF NOT EXISTS user (username TEXT UNIQUE, email TEXT UNIQUE, password TEXT)'
-	const createTableEntry = 'CREATE TABLE IF NOT EXISTS entry (user_id TEXT UNIQUE, month INTEGER, day INTEGER, year INTEGER, time TEXT, entry TEXT)'
+	const createTableEntry = 'CREATE TABLE IF NOT EXISTS entry (user_id INTEGER, month INTEGER, day INTEGER, year INTEGER, time TEXT, entry TEXT)'
 	const createTableMapInfo = 'CREATE TABLE IF NOT EXISTS map (lat INTEGER, lon INTEGER)'
 
 	db.run(dropTableUser, (err)=>{

@@ -4,6 +4,8 @@ let validate = require('../validation/formValidation')
 let bcrypt = require('bcrypt')
 let jwt = require('jsonwebtoken')
 
+require('dotenv').config()
+
 let router = express.Router()
 
 // C
@@ -100,14 +102,14 @@ router.post('/login', (req, res) => {
 				}else if(!isMatch){
 					return res.status(400).json({
 						status: 400,
-						message: 'username or password is incorrect'
+						message: 'username or password is incorrect.'
 					})
 				}else if(isMatch){
 					let user = {
 						id: checkedUser[0].rowid
 					}
 
-					jwt.sign(user, 'tucasaesmicasa', {expiresIn: '1hr'}, (err, signedJwt) => {
+					jwt.sign(user, process.env.JWT_SECRET, {expiresIn: '1hr'}, (err, signedJwt) => {
 						if(err){
 							return res.status(500).json({
 								status: 500,
