@@ -1,10 +1,20 @@
 const db = require('./database')
 
 db.serialize(()=>{
-	const dropTableEntry = 'DROP TABLE entry_table'
-	const dropTableMapInfo = 'DROP TABLE map_info_table'
-	const createTableEntry = 'CREATE TABLE IF NOT EXISTS entry_table (month INTEGER, day INTEGER, year INTEGER, time TEXT, entry TEXT)'
-	const createTableMapInfo = 'CREATE TABLE IF NOT EXISTS map_info_table (lat INTEGER, lon INTEGER)'
+	const dropTableUser = 'DROP TABLE user'
+	const dropTableEntry = 'DROP TABLE entry'
+	const dropTableMapInfo = 'DROP TABLE map'
+	const createTableUser = 'CREATE TABLE IF NOT EXISTS user (user_id TEXT UNIQUE, username TEXT UNIQUE, email TEXT UNIQUE, password TEXT)'
+	const createTableEntry = 'CREATE TABLE IF NOT EXISTS entry (user_id TEXT UNIQUE, month INTEGER, day INTEGER, year INTEGER, time TEXT, entry TEXT)'
+	const createTableMapInfo = 'CREATE TABLE IF NOT EXISTS map (lat INTEGER, lon INTEGER)'
+
+	db.run(dropTableUser, (err)=>{
+		if(err){
+			console.log('failed to drop user table', err)
+		}else{
+			console.log('dropped user table')
+		}
+	})
 
 	db.run(dropTableEntry, (err)=>{
 		if(err){
@@ -19,6 +29,14 @@ db.serialize(()=>{
 			console.log('failed to drop map_info table', err)
 		}else{
 			console.log('dropped map_info table')
+		}
+	})
+
+	db.run(createTableUser, (err)=>{
+		if(err){
+			console.log('failed to create user table', err)
+		}else{
+			console.log('created user table')
 		}
 	})
 
