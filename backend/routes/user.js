@@ -3,12 +3,13 @@ let database = require('../database')
 let validate = require('../validation/formValidation')
 let bcrypt = require('bcrypt')
 let jwt = require('jsonwebtoken')
+let authRequired = require('../middleware/authRequired')
 
 require('dotenv').config()
 
 let router = express.Router()
 
-// C
+// POST request to create a new user
 router.post('/register', (req, res) => {
 	const {errors, notValid} = validate(req.body)
 
@@ -68,6 +69,7 @@ router.post('/register', (req, res) => {
 	})
 })
 
+// POST request to log in a user
 router.post('/login', (req, res) => {
 	if(!req.body.username || !req.body.password){
 		return res.status(400).json({
@@ -130,8 +132,74 @@ router.post('/login', (req, res) => {
 	})
 })
 
-// U
+// PUT request to update an authorized user
+router.put('/update', authRequired, (req, res) => {
+	bcrypt.genSalt(10, (err, salt) => {
+		if(err){
+			return res.status(500).json({
+				status:500,
+				message: 'something went wrong. try again.'
+			})
+		}
+		bcrypt.hash(req.body.password, salt, (err, hash) => {
+			if(err){
+				return res.status(500).json({
+					status: 500,
+					message: 'something went wrong. try again.'
+				})
+			}
 
-// D
+			const updateUser = `
+			UPDATE user SET username = ?, email = ?, password = ?
+			WHERE user.rowid = ${req.userId}
+			`
+			
+			database.run(updateUser, [req.body.username, req.body.email, hash], (err) => {
+				if(err){
+					return res.status(500).json({
+						status: 500,
+						message: 'something went wrong. try again.'
+					})
+				}else{
+					return res.status(200).json({
+						status: 200,
+						message: 'successfully updated user info.'
+					})
+				}
+			})
+		})
+	})
+})
+
+// DELETE request to delete an authorized user
+router.delete('/delete', authRequired, (req, res) => {
+	const deleteUser = `DELETE FROM user WHERE user.rowid = ${req.userId}`
+
+	database.run(deleteUser, (err) => {
+		if(err){
+			console.log(err)
+			return res.status(500).json({
+				status: 500,
+				message: 'something went wrong. try again.'
+			})
+		}else{
+			const deleteEntry = `DELETE FROM entry WHERE entry.user_id = ${req.userId}`
+
+			database.run(deleteEntry, (err) => {
+				if(err){
+					return res.status(500).json({
+						status: 500,
+						message: 'something went wrong. try again.'
+					})
+				}else{
+					return res.status(200).json({
+						status: 200,
+						message: 'successfully deleted user and entry'
+					})
+				}
+			})
+		}
+	})
+})
 
 module.exports = router

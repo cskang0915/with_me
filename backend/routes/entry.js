@@ -4,7 +4,7 @@ let authRequired = require('../middleware/authRequired')
 
 let router = express.Router()
 
-// C
+// POST request to create a new entry
 router.post('/new', authRequired, (req, res) => {
 	const createNewEntry = `INSERT INTO entry VALUES (?, ?, ?, ?, ?, ?)`
 
@@ -33,7 +33,7 @@ router.post('/new', authRequired, (req, res) => {
 	})
 })
 
-// R
+// GET request for all entries
 router.get('/get/all', authRequired, (req, res) => {
 	const getAllEntry = `
 	SELECT *, entry.rowid FROM entry
@@ -52,6 +52,7 @@ router.get('/get/all', authRequired, (req, res) => {
 	})
 })
 
+// GET request for one entry by month and day
 router.get('/get/:month/:day', authRequired, (req, res) => {
 	const getOneEntry = `
 	SELECT *, entry.rowid FROM entry
@@ -72,7 +73,7 @@ router.get('/get/:month/:day', authRequired, (req, res) => {
 	})
 })
 
-// D
+// DELETE request to delete an entry by month, day and rowid
 router.delete('/delete/:month/:day/:rowid', authRequired, (req, res) => {
 	const deleteOneEntry = `
 	DELETE FROM entry WHERE entry.user_id = ${req.userId}
