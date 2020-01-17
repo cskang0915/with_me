@@ -1,8 +1,8 @@
-let express = require('express')
-let database = require('../database')
-let authRequired = require('../middleware/authRequired')
+const express = require('express')
+const database = require('../database')
+const authRequired = require('../middleware/authRequired')
 
-let router = express.Router()
+const router = express.Router()
 
 // POST request to create a new entry
 router.post('/new', authRequired, (req, res) => {

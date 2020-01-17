@@ -1,13 +1,13 @@
-let express = require('express')
-let database = require('../database')
-let validate = require('../validation/formValidation')
-let bcrypt = require('bcrypt')
-let jwt = require('jsonwebtoken')
-let authRequired = require('../middleware/authRequired')
+const express = require('express')
+const database = require('../database')
+const validate = require('../validation/formValidation')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const authRequired = require('../middleware/authRequired')
 
 require('dotenv').config()
 
-let router = express.Router()
+const router = express.Router()
 
 // POST request to create a new user
 router.post('/register', (req, res) => {

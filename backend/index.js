@@ -1,8 +1,8 @@
-let express = require('express')
-let userRouter = require('./routes/user')
-let entryRouter = require('./routes/entry')
+const express = require('express')
+const userRouter = require('./routes/user')
+const entryRouter = require('./routes/entry')
 
-let app = express()
+const app = express()
 app.use(express.json())
 
 app.use('/api/user', userRouter)
