@@ -1,15 +1,16 @@
 let express = require('express')
-let entryRouter = require('./routes/entry')
-let userRouter = require('./routes/entry')
+let userRouter = require('./routes/user')
+// let entryRouter = require('./routes/entry')
 
 let app = express()
+app.use(express.json())
 
 app.use('/api/user', userRouter)
-app.use('/api/entry', entryRouter)
+// app.use('/api/entry', entryRouter)
 
 
 app.get('/', (req, res)=>{
-	res.send('')
+	res.send('backend')
 })
 
 app.listen(9000, ()=>{

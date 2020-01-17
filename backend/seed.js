@@ -4,7 +4,7 @@ db.serialize(()=>{
 	const dropTableUser = 'DROP TABLE user'
 	const dropTableEntry = 'DROP TABLE entry'
 	const dropTableMapInfo = 'DROP TABLE map'
-	const createTableUser = 'CREATE TABLE IF NOT EXISTS user (user_id TEXT UNIQUE, username TEXT UNIQUE, email TEXT UNIQUE, password TEXT)'
+	const createTableUser = 'CREATE TABLE IF NOT EXISTS user (username TEXT UNIQUE, email TEXT UNIQUE, password TEXT)'
 	const createTableEntry = 'CREATE TABLE IF NOT EXISTS entry (user_id TEXT UNIQUE, month INTEGER, day INTEGER, year INTEGER, time TEXT, entry TEXT)'
 	const createTableMapInfo = 'CREATE TABLE IF NOT EXISTS map (lat INTEGER, lon INTEGER)'
 
@@ -26,9 +26,9 @@ db.serialize(()=>{
 
 	db.run(dropTableMapInfo, (err)=>{
 		if(err){
-			console.log('failed to drop map_info table', err)
+			console.log('failed to drop map table', err)
 		}else{
-			console.log('dropped map_info table')
+			console.log('dropped map table')
 		}
 	})
 
@@ -50,9 +50,9 @@ db.serialize(()=>{
 
 	db.run(createTableMapInfo, (err)=>{
 		if(err){
-			console.log('failed to create map_info table', err)
+			console.log('failed to create map table', err)
 		}else{
-			console.log('created map_info table')
+			console.log('created map table')
 		}
 	})
 })
