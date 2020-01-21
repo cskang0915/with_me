@@ -74,7 +74,7 @@ router.post('/login', (req, res) => {
 	if(!req.body.username || !req.body.password){
 		return res.status(400).json({
 			status: 400,
-			message: 'enter email and password.'
+			message: 'enter username and password.'
 		})
 	}
 
