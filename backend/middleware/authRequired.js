@@ -19,7 +19,6 @@ module.exports = (req, res, next) => {
 
 		database.all(checkUser, (err, checkedUser) => {
 			if(err){
-				console.log(err)
 				return res.status(500).json({
 					status: 500,
 					message: 'something went wrong. try again.'

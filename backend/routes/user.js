@@ -133,12 +133,12 @@ router.post('/login', (req, res) => {
 })
 
 // GET one request to get info for an authorized user
-router.get('/:rowid', authRequired, (req, res) => {
+router.get('/info', authRequired, (req, res) => {
 	// const username = req.params.username
 	// console.log(username)
 	const getOneUsername = `
-	SELECT *, user.rowid FROM user
-	WHERE user.rowid = ${req.params.rowid}
+	SELECT * FROM user
+	WHERE user.rowid = ${req.userId}
 	`
 
 	database.all(getOneUsername, (err, user) => {
@@ -149,7 +149,10 @@ router.get('/:rowid', authRequired, (req, res) => {
 				message: 'somethine went wrong. try again.'
 			})
 		}else{
-			return res.status(200).json(user)
+			return res.status(200).json({
+				rowid: req.userId,
+				user
+			})
 		}
 	})
 })
