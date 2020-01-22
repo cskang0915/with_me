@@ -23,6 +23,8 @@ class App extends Component {
 
   	localStorage.removeItem('uid')
 
+  	alert('Logged out')
+
   	this.props.history.push('/login')
   }
 
@@ -30,7 +32,7 @@ class App extends Component {
   render() {
   	return (
   		<div>
-  			<Routes currentUser = {this.state.currentUser} setCurrentUser = {this.setCurrentUser}/>
+  			<Routes currentUser = {this.state.currentUser} setCurrentUser = {this.setCurrentUser} logout = {this.logout}/>
   		</div>
   	)
   }

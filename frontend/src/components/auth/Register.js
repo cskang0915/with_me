@@ -27,6 +27,14 @@ class Register extends Component {
 				"Content-Type": "application/json"
 			}
 		})
+		.then(res => res.json())
+		.then(data => {
+			if(data.status === 201){
+				this.props.history.push('/')
+			}else{
+				alert('Username or email is already taken')
+			}
+		})
 		.catch(err => {
 			console.log(err)
 			this.setState({

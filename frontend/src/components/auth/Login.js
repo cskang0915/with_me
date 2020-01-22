@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 
 class Login extends Component {
 	state = {
@@ -27,11 +28,14 @@ class Login extends Component {
 		})
 		.then(res => res.json())
 		.then(data => {
-			this.props.setCurrentUser(data.signedJwt)
-			this.props.history.push('/profile')
+			if(data.status === 200){
+				this.props.setCurrentUser(data.signedJwt)
+				this.props.history.push('/profile')
+			}else{
+				alert('Incorrect username or password')
+			}
 		})
 		.catch(err => {
-			console.log(err)
 			this.setState({
 				error: err
 			})
@@ -52,6 +56,7 @@ class Login extends Component {
 					</div>
 					<button type = "submit" className = "button-submit">Log In</button>
 				</form>
+				<Link to='/register'><button>Register</button></Link>
 			</div>
 		)
 	}
