@@ -1,6 +1,10 @@
 import React, {Component} from 'react'
 import NavbarProfile from '../navbars/NavbarProfile'
+import RoutesProfile from '../config/RoutesProfile'
+import {Switch} from 'react-router-dom'
 import Profile from '../components/profile/Profile'
+import EntryForm from '../components/entry/EntryForm'
+import EntryList from '../components/entry/EntryList'
 
 class ProfileContainer extends Component {
 	state = {
@@ -47,8 +51,7 @@ class ProfileContainer extends Component {
 	render() {
 		return(
 			<div>
-				<NavbarProfile/>
-				<Profile logout={this.logout} rowid = {this.state.rowid} username = {this.state.username} email = {this.state.email}/>
+				<RoutesProfile rowid = {this.state.rowid} username = {this.state.username} email = {this.state.email} logout = {this.logout}/>
 			</div>
 		)
 	}

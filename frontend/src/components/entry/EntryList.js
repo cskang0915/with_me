@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 class EntryList extends Component {
-	render(){
+	render() {
 		return(
 			<h1>entry list</h1>
 		)

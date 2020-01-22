@@ -5,7 +5,14 @@ class Login extends Component {
 	state = {
 		username: '',
 		password: '',
+		rowid: '',
 		error: null,
+	}
+
+	componentDidMount(){
+		if(localStorage.getItem('uid')){
+			this.props.history.push('/profile')
+		}
 	}
 
 	handleChange = (event) => {
@@ -30,7 +37,10 @@ class Login extends Component {
 		.then(data => {
 			if(data.status === 200){
 				this.props.setCurrentUser(data.signedJwt)
-				this.props.history.push('/profile')
+				this.setState({
+					rowid: data.id.id
+				})
+				this.props.history.push(`/profile`)
 			}else{
 				alert('Incorrect username or password')
 			}
