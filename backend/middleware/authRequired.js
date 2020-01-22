@@ -15,14 +15,9 @@ module.exports = (req, res, next) => {
 		let verified = jwt.verify(bearerToken, process.env.JWT_SECRET)
 		req.userId = verified.id
 
-		console.log('!!!!!!')
-		console.log(verified.id)
-
 		const checkUser = `SELECT *, rowid FROM user WHERE user.rowid = ${verified.id}`
 
 		database.all(checkUser, (err, checkedUser) => {
-			console.log('???????')
-			console.log(checkedUser)
 			if(err){
 				console.log(err)
 				return res.status(500).json({

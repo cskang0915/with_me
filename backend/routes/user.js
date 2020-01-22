@@ -37,14 +37,14 @@ router.post('/register', (req, res) => {
 			if(err){
 				return res.status(500).json({
 					status: 500,
-					message: 'something went wrong. try again.'
+					message: 'something went wrong. try again.1'
 				})
 			}
 			bcrypt.hash(req.body.password, salt, (err, hash) => {
 				if(err){
 					return res.status(500).json({
 						status: 500,
-						message: 'something went wrong. try again.'
+						message: 'something went wrong. try again.2'
 					})
 				}
 
@@ -54,7 +54,7 @@ router.post('/register', (req, res) => {
 					if(err){
 						return res.status(500).json({
 							status: 500,
-							message: 'something went wrong. try again.'
+							message: 'something went wrong. try again.3'
 						})
 					}else{
 						res.status(201).json({
@@ -128,6 +128,28 @@ router.post('/login', (req, res) => {
 					})
 				}
 			})
+		}
+	})
+})
+
+// GET one request to get info for an authorized user
+router.get('/:rowid', authRequired, (req, res) => {
+	// const username = req.params.username
+	// console.log(username)
+	const getOneUsername = `
+	SELECT *, user.rowid FROM user
+	WHERE user.rowid = ${req.params.rowid}
+	`
+
+	database.all(getOneUsername, (err, user) => {
+		if(err){
+			console.log(err)
+			return res.status(500).json({
+				status: 500,
+				message: 'somethine went wrong. try again.'
+			})
+		}else{
+			return res.status(200).json(user)
 		}
 	})
 })
