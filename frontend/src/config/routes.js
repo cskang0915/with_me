@@ -9,13 +9,13 @@ import EntryList from '../components/entry/EntryList'
 import ProfileContainer from '../containers/ProfileContainer'
 
 export default withRouter(({setCurrentUser, currentUser, history}) => {
-	const PrivateRoute = ({component: Component, ...rest}) => (
-		<Route {...rest} render = {(props) => (
-			currentUser 
+	const PrivateRoute = ({component: Component, ...rest}) => {
+		return <Route {...rest} render = {(props) => (
+			currentUser
 				? <Component {...props}/>
 				: <Redirect to = '/login'/>
 		)} />
-	)
+	}
 
 	return(
 		<div>
@@ -24,7 +24,6 @@ export default withRouter(({setCurrentUser, currentUser, history}) => {
 				<Route exact path ='/home' component = {Home}/>
 				<Route path = '/login' render = {() => <Login history = {history} setCurrentUser = {setCurrentUser}/>}/>
 				<Route path = '/register' component = {Register}/>
-			
 				<PrivateRoute path = '/profile' component = {ProfileContainer}/>
 			</Switch>
 		</div>

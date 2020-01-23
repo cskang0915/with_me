@@ -17,35 +17,9 @@ class EntryForm extends Component {
 		})
 	}
 
-	// getDate() {
-	// 	let date = new Date()
-	// 	let month = date.getMonth()
-	// 	let day = date.getDate()
-	// 	let year = date.getFullYear()
-	// 	let time = date.toLocaleTimeString()
-	// 	console.log('.....')
-	// 	this.setState({
-	// 		month: month,
-	// 		day: day,
-	// 		year: year,
-	// 		time: time
-	// 	})
-
-	// 	console.log(this.state)
-	// 	console.log('assa')
-	// }
-
 	handleSubmit = (event) => {
-		event.preventDefault()
-
-		// this.getDate()
-
 		const user = this.state
-		// console.log(user)
-		// console.log('!!!')
-		// console.log(this.state)
-		// debugger
-
+	
 		fetch('http://localhost:9000/api/entry/new', {
 			method: "POST",
 			body: JSON.stringify(user),
@@ -55,18 +29,16 @@ class EntryForm extends Component {
 			}
 		})
 		.then(res => res.json())
-
-		this.props.history.push('/profile')
 	}
 
 	render() {
 		return(
 			<div>
-				<h1>entry form</h1>
+				<h1>Write Entry</h1>
 				<form onSubmit = {this.handleSubmit}>
 					<div className = "form-group-entry">
 						<label>New Entry</label>
-						<input type = "text" name = "entry" value = {this.state.entry} onChange = {this.handleChange} placeholder = "Create a new entry"/>
+						<input type = "text" name = "entry" value = {this.state.entry} onChange = {this.handleChange} placeholder = "Create a new entry" required/>
 					</div>
 					<button type = "submit" className = "button-submit">Create entry</button>
 				</form>

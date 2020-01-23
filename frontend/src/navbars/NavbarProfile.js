@@ -10,7 +10,7 @@ class NavbarProfile extends Component{
 				<nav className="header-profile-navbar">
 					<div className = "header-profile-link"><Link to = '/profile/user'>User Profile</Link></div>
 					<div className = "header-profile-link"><Link to = '/profile/entry/new'>New Entry</Link></div>
-					<div className = "header-profile-link"><Link to = '/profile/entry/all'>All Entries</Link></div>
+					<div className = "header-profile-link"><Link to = '/profile/entry/all'>View Entries</Link></div>
 				</nav>
 			</div>
 		)
