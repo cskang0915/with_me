@@ -18,6 +18,7 @@ class EntryForm extends Component {
 	}
 
 	handleSubmit = (event) => {
+		this.state.month++
 		const user = this.state
 	
 		fetch('http://localhost:9000/api/entry/new', {

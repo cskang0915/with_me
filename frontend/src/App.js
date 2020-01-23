@@ -28,19 +28,6 @@ class App extends Component {
   	localStorage.setItem('uid', token)
   }
 
-  logout = () => {
-  	this.setState({
-  		currentUser: null
-  	})
-
-  	localStorage.removeItem('uid')
-
-  	alert('Logged out')
-
-  	this.props.history.push('/login')
-  }
-
-
   render() {
   	return (
   		<div>

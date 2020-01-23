@@ -19,7 +19,6 @@ router.post('/new', authRequired, (req, res) => {
 			req.body.entry
 		], (err) => {
 			if(err){
-				console.log(err)
 				return res.status(500).json({
 					status: 500,
 					message: 'something went wrong. try again.'
@@ -67,7 +66,9 @@ router.get('/get/:month/:day', authRequired, (req, res) => {
 				status: 500,
 				message: 'something went wrong. try again.'
 			})
-		}else{
+		}else if(entry.length === 0) {
+			return res.status(200).json('No entries on this date.')
+		}else {
 			return res.status(200).json(entry)
 		}
 	})

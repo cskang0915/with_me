@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import EntryContainer from '../../containers/EntryContainer'
 
 class EntryList extends Component {
 	state = {
@@ -26,12 +27,26 @@ class EntryList extends Component {
 		})
 			.then(res => res.json())
 			.then(data => {
-				console.log(data)
-				// this.setState({
-				// 	data: data
-				// })
+				this.setState({
+					data: data
+				})
 			})
 
+	}
+
+	getAllEntries = () => {
+		fetch('http://localhost:9000/api/entry/get/all', {
+			headers: {
+				"Content-Type": "application/json",
+				"authorization": `Bearer ${localStorage.uid}`
+			}
+		})
+			.then(res => res.json())
+			.then(data => {
+				this.setState({
+					data: data
+				})
+			})
 	}
 
 	render() {
@@ -50,6 +65,8 @@ class EntryList extends Component {
 					</div>
 					<button type = "submit" className = "button-submit">Search Entries</button>
 				</form>
+				<button onClick = {this.getAllEntries}>See All Entries</button>
+				<EntryContainer data = {this.state.data}/>
 			</div>
 		)
 	}

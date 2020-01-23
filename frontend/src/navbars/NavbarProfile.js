@@ -8,9 +8,10 @@ class NavbarProfile extends Component{
 			<div className = "header-profile">
 				<h1>Navigation Bar</h1>
 				<nav className="header-profile-navbar">
-					<div className = "header-profile-link"><Link to = '/profile/user'>User Profile</Link></div>
-					<div className = "header-profile-link"><Link to = '/profile/entry/new'>New Entry</Link></div>
-					<div className = "header-profile-link"><Link to = '/profile/entry/all'>View Entries</Link></div>
+					<div className = "header-profile-link"><Link to = '/profile/user'><button>User Profile</button></Link></div>
+					<div className = "header-profile-link"><Link to = '/profile/entry/new'><button>New Entry</button></Link></div>
+					<div className = "header-profile-link"><Link to = '/profile/entry/all'><button>View Entries</button></Link></div>
+					<div className = "header-profile-link"><button onClick = {this.props.logout}>Log out</button></div>
 				</nav>
 			</div>
 		)
