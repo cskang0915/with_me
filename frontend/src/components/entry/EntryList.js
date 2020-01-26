@@ -5,7 +5,8 @@ class EntryList extends Component {
 	state = {
 		month: '',
 		day: '',
-		data: []
+		data: [],
+		error: null
 	}
 
 	handleChange = (event) => {
@@ -31,6 +32,11 @@ class EntryList extends Component {
 					data: data
 				})
 			})
+			.catch(err => {
+				this.setState({
+					error: err
+				})
+			})
 
 	}
 
@@ -47,10 +53,15 @@ class EntryList extends Component {
 					data: data
 				})
 			})
+			.catch(err => {
+				this.setState({
+					error:err
+				})
+			})
 	}
 
 	render() {
-	{/* button to search by that day using new Date.now or toggle the visibility of a search bar */}
+	/* button to search by that day using new Date.now or toggle the visibility of a search bar */
 		return(
 			<div>
 				<h1>Find Past Entries</h1>

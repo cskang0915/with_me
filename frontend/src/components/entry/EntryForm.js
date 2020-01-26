@@ -4,11 +4,12 @@ class EntryForm extends Component {
 	date = new Date()
 	state = {
 		user_id: undefined,
-		month: this.date.getMonth(),
+		month: (this.date.getMonth() + 1),
 		day: this.date.getDate(),
 		year: this.date.getFullYear(),
 		time: this.date.toLocaleTimeString(),
-		entry: ''
+		entry: '',
+		error: null
 	}
 
 	handleChange = (event) => {
@@ -18,7 +19,14 @@ class EntryForm extends Component {
 	}
 
 	handleSubmit = (event) => {
-		this.state.month++
+		// this.state.month++
+		this.date = new Date()
+		this.setState({
+			month: (this.date.getMonth() + 1),
+			day: this.date.getDate(),
+			year: this.date.getFullYear(),
+			time: this.date.toLocaleTimeString()
+		})
 		const user = this.state
 	
 		fetch('http://localhost:9000/api/entry/new', {
@@ -30,6 +38,11 @@ class EntryForm extends Component {
 			}
 		})
 		.then(res => res.json())
+		.catch(err => {
+			this.setState({
+				error: err
+			})
+		})
 	}
 
 	render() {

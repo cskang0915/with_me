@@ -1,16 +1,12 @@
 import React, {Component} from 'react'
-import NavbarProfile from '../navbars/NavbarProfile'
 import RoutesProfile from '../config/RoutesProfile'
-import {Switch} from 'react-router-dom'
-import Profile from '../components/profile/Profile'
-import EntryForm from '../components/entry/EntryForm'
-import EntryList from '../components/entry/EntryList'
 
 class ProfileContainer extends Component {
 	state = {
 		rowid: '',
 		username: '',
-		email: ''
+		email: '',
+		error: null
 	}
 
 	componentDidMount() {
@@ -32,7 +28,9 @@ class ProfileContainer extends Component {
 			})
 		})
 		.catch(err => {
-			console.log(err)
+			this.setState({
+				error: err
+			})
 		})
 	}
 

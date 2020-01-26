@@ -1,11 +1,8 @@
 import React from 'react'
 import {Switch, Route, withRouter, Redirect} from 'react-router-dom'
-import NavbarProfile from '../navbars/NavbarProfile'
 import Home from '../components/Home'
 import Login from '../components/auth/Login'
 import Register from '../components/auth/Register'
-import EntryForm from '../components/entry/EntryForm'
-import EntryList from '../components/entry/EntryList'
 import ProfileContainer from '../containers/ProfileContainer'
 
 export default withRouter(({setCurrentUser, currentUser, history}) => {
