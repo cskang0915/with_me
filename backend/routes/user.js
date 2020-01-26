@@ -52,6 +52,7 @@ router.post('/register', (req, res) => {
 				
 				database.run(createNewUser, [req.body.username, req.body.email, hash], (err) => {
 					if(err){
+						console.log(err)
 						return res.status(500).json({
 							status: 500,
 							message: 'something went wrong. try again.3'
