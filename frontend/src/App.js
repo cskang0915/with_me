@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
-import Routes from './config/routes'
+import RoutesMain from './config/RoutesMain'
 import './App.css'
 
 class App extends Component {
@@ -28,10 +28,22 @@ class App extends Component {
   	localStorage.setItem('uid', token)
   }
 
+  logout = () => {
+    this.setState({
+      currentUser: null
+    })
+
+    localStorage.removeItem('uid')
+
+    alert('Logged out')
+
+    this.props.history.push('/login')
+  }
+
   render() {
   	return (
   		<div>
-  			<Routes currentUser = {this.state.currentUser} setCurrentUser = {this.setCurrentUser}/>
+  			<RoutesMain currentUser = {this.state.currentUser} setCurrentUser = {this.setCurrentUser} logout = {this.logout}/>
   		</div>
   	)
   }

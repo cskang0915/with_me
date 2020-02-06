@@ -34,23 +34,10 @@ class ProfileContainer extends Component {
 			})
 		})
 	}
-
-	logout = () => {
-  		this.setState({
-  			currentUser: null
-  		})
-
-  		localStorage.removeItem('uid')
-
-  		alert('Logged out')
-
-	  	this.props.history.push('/login')
-  	}
-
 	render() {
 		return(
 			<div>
-				<RoutesProfile rowid = {this.state.rowid} username = {this.state.username} email = {this.state.email} logout = {this.logout}/>
+				<RoutesProfile rowid = {this.state.rowid} username = {this.state.username} email = {this.state.email} logout = {this.props.logout}/>
 			</div>
 		)
 	}
