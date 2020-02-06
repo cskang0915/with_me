@@ -90,7 +90,7 @@ router.post('/login', (req, res) => {
 				status: 500,
 				message: 'something went wrong. try again.'
 			})
-		}else if(!checkedUser){
+		}else if(checkedUser.length === 0){
 			return res.status(400).json({
 				status: 400,
 				message: 'username or password is incorrect.'
@@ -147,7 +147,7 @@ router.get('/info', authRequired, (req, res) => {
 			console.log(err)
 			return res.status(500).json({
 				status: 500,
-				message: 'somethine went wrong. try again.'
+				message: 'something went wrong. try again.'
 			})
 		}else{
 			return res.status(200).json({

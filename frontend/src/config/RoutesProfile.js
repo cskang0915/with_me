@@ -11,6 +11,7 @@ class RoutesProfile extends Component{
 			<BrowserRouter>
 				<NavbarProfile rowid = {this.props.rowid} logout = {this.props.logout}/>
 				<Switch>
+					<Route exact path = '/profile' render = {() => <Redirect to ='/profile/entry/new'/>}/>
 					<Route exact path = '/profile/user' render = {() => {
 						return <Profile username = {this.props.username} email = {this.props.email} rowid = {this.props.rowid}/>
 					}}/>
