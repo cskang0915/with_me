@@ -1,13 +1,12 @@
 import React, {Component} from 'react'
 
 class EntryForm extends Component {
-	date = new Date()
 	state = {
-		user_id: undefined,
-		month: (this.date.getMonth() + 1),
-		day: this.date.getDate(),
-		year: this.date.getFullYear(),
-		time: this.date.toLocaleTimeString(),
+		user_id: null,
+		month: null,
+		day: null,
+		year: null,
+		time: null,
 		entry: '',
 		error: null
 	}
@@ -19,14 +18,14 @@ class EntryForm extends Component {
 	}
 
 	handleSubmit = (event) => {
-		// this.state.month++
-		this.date = new Date()
-		this.setState({
-			month: (this.date.getMonth() + 1),
-			day: this.date.getDate(),
-			year: this.date.getFullYear(),
-			time: this.date.toLocaleTimeString()
-		})
+		event.preventDefault()
+
+		const date = new Date()
+		this.state.month = date.getMonth() + 1
+		this.state.day = date.getDate()
+		this.state.year = date.getFullYear()
+		this.state.time = date.toLocaleTimeString()
+
 		const user = this.state
 	
 		fetch('http://localhost:9000/api/entry/new', {
@@ -43,6 +42,7 @@ class EntryForm extends Component {
 				error: err
 			})
 		})
+		window.location.reload(true)
 	}
 
 	render() {

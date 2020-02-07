@@ -1,12 +1,6 @@
 import React, {Component} from 'react'
 
 class Entry extends Component {
-	// state = {
-	// 	month: {this.props.entry.month},
-	// 	day: ,
-	// 	rowid: ,
-	// }
-
 	deleteEntry = () => {
 		let url = `http://localhost:9000/api/entry/delete/${this.props.entry.month}/${this.props.entry.day}/${this.props.entry.rowid}`
 
@@ -17,12 +11,18 @@ class Entry extends Component {
 				"authorization": `Bearer ${localStorage.uid}`
 			}
 		})
-		console.log(this.props)
-		// .catch(err => {
-		// 	this.setState({
-		// 		error: err
-		// 	})
-		// })
+		.then(res => res.json())
+		.then(data => {
+			console.log('clicked')
+			if(data.status === 200){
+				console.log('hello')
+			}else {
+				console.log('hi')
+			}
+		})
+		.then(() => {
+			this.props.updateDataInEntryList()
+		})
 	}
 
 	render() {
@@ -32,6 +32,7 @@ class Entry extends Component {
 					<li>{this.props.entry.month}/{this.props.entry.day}/{this.props.entry.year}</li>
 					<li>{this.props.entry.time}</li>
 					<li>{this.props.entry.entry}</li>
+					<button onClick = {this.deleteEntry}>Delete</button>
 				</ul>
 			</div>
 		)

@@ -6,7 +6,8 @@ class EntryList extends Component {
 		month: '',
 		day: '',
 		data: [],
-		error: null
+		error: null,
+		selectAll: true
 	}
 
 	handleChange = (event) => {
@@ -29,7 +30,8 @@ class EntryList extends Component {
 			.then(res => res.json())
 			.then(data => {
 				this.setState({
-					data: data
+					data: data,
+					selectAll: false
 				})
 			})
 			.catch(err => {
@@ -50,7 +52,8 @@ class EntryList extends Component {
 			.then(res => res.json())
 			.then(data => {
 				this.setState({
-					data: data
+					data: data,
+					selectAll: true
 				})
 			})
 			.catch(err => {
@@ -58,6 +61,50 @@ class EntryList extends Component {
 					error:err
 				})
 			})
+	}
+
+	updateDataInEntryList = () => {
+		if(this.state.selectAll === true) {
+			fetch('http://localhost:9000/api/entry/get/all', {
+				headers: {
+					"Content-Type": "application/json",
+					"authorization": `Bearer ${localStorage.uid}`
+				}
+			})
+				.then(res => res.json())
+				.then(data => {
+					this.setState({
+						data: data,
+						selectAll: true
+					})
+				})
+				.catch(err => {
+					this.setState({
+						error:err
+					})
+				})
+		} else {
+			const url = `http://localhost:9000/api/entry/get/${this.state.month}/${this.state.day}`
+
+			fetch(url, {
+				headers: {
+					"Content-Type": "application/json",
+					"authorization": `Bearer ${localStorage.uid}`
+				}
+			})
+				.then(res => res.json())
+				.then(data => {
+					this.setState({
+						data: data,
+						selectAll: false
+					})
+				})
+				.catch(err => {
+					this.setState({
+						error: err
+					})
+				})
+		}
 	}
 
 	render() {
@@ -77,7 +124,7 @@ class EntryList extends Component {
 					<button type = "submit" className = "button-submit">Search Entries</button>
 				</form>
 				<button onClick = {this.getAllEntries}>See All Entries</button>
-				<EntryContainer data = {this.state.data}/>
+				<EntryContainer data = {this.state.data} updateDataInEntryList = {this.updateDataInEntryList}/>
 			</div>
 		)
 	}

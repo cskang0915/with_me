@@ -11,7 +11,6 @@ class ProfileContainer extends Component {
 
 	componentDidMount() {
 		this.getUserInfo()
-		console.log(this.state)
 	}
 
 	getUserInfo = () => {

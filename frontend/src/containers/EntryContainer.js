@@ -8,7 +8,8 @@ class EntryContainer extends Component {
 			entry = <div>There are no entries on this date.</div>
 		}else {
 			entry = this.props.data.map((entry) => {
-				return <Entry entry = {entry}/>
+				console.log(entry)
+				return <Entry updateDataInEntryList = {this.props.updateDataInEntryList} entry = {entry} month = {entry.month} day = {entry.day} rowid = {entry.rowid}/>
 			})
 		}
 		return(
