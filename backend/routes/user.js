@@ -1,4 +1,4 @@
-const express = require('express')
+const userRouter = require('express').Router()
 const database = require('../database')
 const validate = require('../validation/formValidation')
 const bcrypt = require('bcrypt')
@@ -7,10 +7,8 @@ const authRequired = require('../middleware/authRequired')
 
 require('dotenv').config()
 
-const router = express.Router()
-
 // POST request to create a new user
-router.post('/register', (req, res) => {
+userRouter.post('/register', (req, res) => {
 	const {errors, notValid} = validate(req.body)
 
 	if(notValid){
@@ -20,42 +18,38 @@ router.post('/register', (req, res) => {
 		})
 	}
 
-	const checkUser = `
-	SELECT * FROM user
-	WHERE user.username = ${req.body.username}
-	AND user.email = ${req.body.email}
-	`
+	const checkUser = `SELECT * FROM user WHERE user.email = ${req.body.email}`
 
 	database.all(checkUser, (err, checkedUser) => {
 		if(checkedUser){
 			return res.status(400).json({
 				status: 400,
-				message: 'username or email is already registered.'
+				message: 'email is already registered.'
 			})
 		}
 		bcrypt.genSalt(10, (err, salt) => {
 			if(err){
 				return res.status(500).json({
 					status: 500,
-					message: 'something went wrong. try again.1'
+					message: 'something went wrong. try again.'
 				})
 			}
 			bcrypt.hash(req.body.password, salt, (err, hash) => {
 				if(err){
 					return res.status(500).json({
 						status: 500,
-						message: 'something went wrong. try again.2'
+						message: 'something went wrong. try again.'
 					})
 				}
 
-				const createNewUser = `INSERT INTO user VALUES (?, ?, ?)`
+				const createNewUser = `INSERT INTO user VALUES (?, ?, ?, ?)`
 				
-				database.run(createNewUser, [req.body.username, req.body.email, hash], (err) => {
+				database.run(createNewUser, [req.body.display_name, req.body.email, hash, null], (err) => {
 					if(err){
 						console.log(err)
 						return res.status(500).json({
 							status: 500,
-							message: 'something went wrong. try again.3'
+							message: 'something went wrong. try again.'
 						})
 					}else{
 						res.status(201).json({
@@ -71,20 +65,20 @@ router.post('/register', (req, res) => {
 })
 
 // POST request to log in a user
-router.post('/login', (req, res) => {
-	if(!req.body.username || !req.body.password){
+userRouter.post('/login', (req, res) => {
+	if(!req.body.email || !req.body.password){
 		return res.status(400).json({
 			status: 400,
-			message: 'enter username and password.'
+			message: 'enter email and password.'
 		})
 	}
 
 	const checkUser = `
 	SELECT *, rowid FROM user
-	WHERE user.username = ?
+	WHERE user.email = ?
 	`
 
-	database.all(checkUser, [req.body.username], (err, checkedUser) => {
+	database.all(checkUser, [req.body.email], (err, checkedUser) => {
 		if(err){
 			return res.status(500).json({
 				status: 500,
@@ -93,7 +87,7 @@ router.post('/login', (req, res) => {
 		}else if(checkedUser.length === 0){
 			return res.status(400).json({
 				status: 400,
-				message: 'username or password is incorrect.'
+				message: 'email or password is incorrect.'
 			})
 		}else{
 			bcrypt.compare(req.body.password, checkedUser[0].password, (err, isMatch) => {
@@ -105,7 +99,7 @@ router.post('/login', (req, res) => {
 				}else if(!isMatch){
 					return res.status(400).json({
 						status: 400,
-						message: 'username or password is incorrect.'
+						message: 'email or password is incorrect.'
 					})
 				}else if(isMatch){
 					let user = {
@@ -134,7 +128,7 @@ router.post('/login', (req, res) => {
 })
 
 // GET one request to get info for an authorized user
-router.get('/info', authRequired, (req, res) => {
+userRouter.get('/info', authRequired, (req, res) => {
 	// const username = req.params.username
 	// console.log(username)
 	const getOneUsername = `
@@ -159,7 +153,7 @@ router.get('/info', authRequired, (req, res) => {
 })
 
 // PUT request to update an authorized user
-router.put('/update', authRequired, (req, res) => {
+userRouter.put('/update', authRequired, (req, res) => {
 	bcrypt.genSalt(10, (err, salt) => {
 		if(err){
 			return res.status(500).json({
@@ -176,11 +170,11 @@ router.put('/update', authRequired, (req, res) => {
 			}
 
 			const updateUser = `
-			UPDATE user SET username = ?, email = ?, password = ?
+			UPDATE user SET display_name = ?, email = ?, password = ?, picture = ?
 			WHERE user.rowid = ${req.userId}
 			`
 			
-			database.run(updateUser, [req.body.username, req.body.email, hash], (err) => {
+			database.run(updateUser, [req.body.display_name, req.body.email, hash, null], (err) => {
 				if(err){
 					return res.status(500).json({
 						status: 500,
@@ -198,7 +192,7 @@ router.put('/update', authRequired, (req, res) => {
 })
 
 // DELETE request to delete an authorized user
-router.delete('/delete', authRequired, (req, res) => {
+userRouter.delete('/delete', authRequired, (req, res) => {
 	const deleteUser = `DELETE FROM user WHERE user.rowid = ${req.userId}`
 
 	database.run(deleteUser, (err) => {
@@ -218,9 +212,20 @@ router.delete('/delete', authRequired, (req, res) => {
 						message: 'something went wrong. try again.'
 					})
 				}else{
-					return res.status(200).json({
-						status: 200,
-						message: 'successfully deleted user and entry'
+					const deleteTag = `DELETE FROM tag WHERE tag.user_id = ${req.userId}`
+
+					database.run(deleteTag, (err) => {
+						if(err){
+							return res.status(500).json({
+								status: 500,
+								message: 'something went wrong. try again.'
+							})
+						}else{
+							return res.status(200).json({
+								status: 200,
+								message: 'successfully deleted user and entry'
+							})
+						}
 					})
 				}
 			})
@@ -228,4 +233,4 @@ router.delete('/delete', authRequired, (req, res) => {
 	})
 })
 
-module.exports = router
+module.exports = userRouter

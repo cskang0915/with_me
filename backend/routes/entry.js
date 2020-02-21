@@ -1,12 +1,10 @@
-const express = require('express')
+const entryRouter = require('express').Router()
 const database = require('../database')
 const authRequired = require('../middleware/authRequired')
 
-const router = express.Router()
-
 // POST request to create a new entry
-router.post('/new', authRequired, (req, res) => {
-	const createNewEntry = `INSERT INTO entry VALUES (?, ?, ?, ?, ?, ?)`
+entryRouter.post('/new', authRequired, (req, res) => {
+	const createNewEntry = `INSERT INTO entry VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
 
 	database.run(
 		createNewEntry,
@@ -16,7 +14,9 @@ router.post('/new', authRequired, (req, res) => {
 			req.body.day,
 			req.body.year,
 			req.body.time,
-			req.body.entry
+			req.body.entry,
+			req.body.tag_id,
+			null
 		], (err) => {
 			if(err){
 				return res.status(500).json({
@@ -33,9 +33,10 @@ router.post('/new', authRequired, (req, res) => {
 })
 
 // GET request for all entries
-router.get('/get/all', authRequired, (req, res) => {
+entryRouter.get('/get/all', authRequired, (req, res) => {
 	const getAllEntry = `
 	SELECT *, entry.rowid FROM entry
+	JOIN tag ON tag.rowid = entry.tag_id
 	WHERE entry.user_id = ${req.userId}
 	`
 
@@ -52,9 +53,10 @@ router.get('/get/all', authRequired, (req, res) => {
 })
 
 // GET request for one entry by month and day
-router.get('/get/:month/:day', authRequired, (req, res) => {
+entryRouter.get('/get/:month/:day', authRequired, (req, res) => {
 	const getOneEntry = `
 	SELECT *, entry.rowid FROM entry
+	JOIN tag ON tag.rowid = entry.tag_id
 	WHERE entry.user_id = ${req.userId}
 	AND entry.month = ${req.params.month}
 	AND entry.day = ${req.params.day}
@@ -75,7 +77,7 @@ router.get('/get/:month/:day', authRequired, (req, res) => {
 })
 
 // DELETE request to delete an entry by month, day and rowid
-router.delete('/delete/:month/:day/:rowid', authRequired, (req, res) => {
+entryRouter.delete('/delete/:month/:day/:rowid', authRequired, (req, res) => {
 	const deleteOneEntry = `
 	DELETE FROM entry WHERE entry.user_id = ${req.userId}
 	AND entry.month = ${req.params.month}
@@ -98,4 +100,4 @@ router.delete('/delete/:month/:day/:rowid', authRequired, (req, res) => {
 	})
 })
 
-module.exports = router
+module.exports = entryRouter

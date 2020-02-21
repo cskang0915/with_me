@@ -1,6 +1,7 @@
 const express = require('express')
 const userRouter = require('./routes/user')
 const entryRouter = require('./routes/entry')
+const tagRouter = require('./routes/tag')
 
 const app = express()
 
@@ -14,6 +15,7 @@ app.use((req, res, next) => {
 app.use(express.json())
 app.use('/api/user', userRouter)
 app.use('/api/entry', entryRouter)
+app.use('/api/tag', tagRouter)
 
 
 app.get('/', (req, res)=>{
