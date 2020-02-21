@@ -15,7 +15,7 @@ entryRouter.post('/new', authRequired, (req, res) => {
 			req.body.year,
 			req.body.time,
 			req.body.entry,
-			req.body.tag_id,
+			req.body.collection_id,
 			null
 		], (err) => {
 			if(err){
@@ -36,7 +36,7 @@ entryRouter.post('/new', authRequired, (req, res) => {
 entryRouter.get('/get/all', authRequired, (req, res) => {
 	const getAllEntry = `
 	SELECT *, entry.rowid FROM entry
-	JOIN tag ON tag.rowid = entry.tag_id
+	JOIN collection ON collection.rowid = entry.collection_id
 	WHERE entry.user_id = ${req.userId}
 	`
 
@@ -56,7 +56,7 @@ entryRouter.get('/get/all', authRequired, (req, res) => {
 entryRouter.get('/get/:month/:day', authRequired, (req, res) => {
 	const getOneEntry = `
 	SELECT *, entry.rowid FROM entry
-	JOIN tag ON tag.rowid = entry.tag_id
+	JOIN collection ON collection.rowid = entry.collection_id
 	WHERE entry.user_id = ${req.userId}
 	AND entry.month = ${req.params.month}
 	AND entry.day = ${req.params.day}

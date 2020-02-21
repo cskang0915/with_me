@@ -212,9 +212,9 @@ userRouter.delete('/delete', authRequired, (req, res) => {
 						message: 'something went wrong. try again.'
 					})
 				}else{
-					const deleteTag = `DELETE FROM tag WHERE tag.user_id = ${req.userId}`
+					const deleteCollection = `DELETE FROM collection WHERE collection.user_id = ${req.userId}`
 
-					database.run(deleteTag, (err) => {
+					database.run(deleteCollection, (err) => {
 						if(err){
 							return res.status(500).json({
 								status: 500,

@@ -3,11 +3,11 @@ const db = require('./database')
 db.serialize(()=>{
 	const dropTableUser = 'DROP TABLE user'
 	const dropTableEntry = 'DROP TABLE entry'
-	const dropTableTag = 'DROP TABLE tag'
+	const dropTableCollection = 'DROP TABLE collection'
 	const dropTableMapInfo = 'DROP TABLE map'
 	const createTableUser = 'CREATE TABLE IF NOT EXISTS user (display_name TEXT, email TEXT UNIQUE, password TEXT, picture TEXT)'
-	const createTableEntry = 'CREATE TABLE IF NOT EXISTS entry (user_id INTEGER, month INTEGER, day INTEGER, year INTEGER, time TEXT, entry TEXT, tag_id INTEGER, picture TEXT)'
-	const createTableTag = 'CREATE TABLE IF NOT EXISTS tag (user_id INTEGER, tag_name TEXT)'
+	const createTableEntry = 'CREATE TABLE IF NOT EXISTS entry (user_id INTEGER, month INTEGER, day INTEGER, year INTEGER, time TEXT, entry TEXT, collection_id INTEGER, picture TEXT)'
+	const createTableCollection = 'CREATE TABLE IF NOT EXISTS collection (user_id INTEGER, collection_name TEXT)'
 	const createTableMapInfo = 'CREATE TABLE IF NOT EXISTS map (lat INTEGER, lon INTEGER)'
 
 	db.run(dropTableUser, (err)=>{
@@ -26,11 +26,11 @@ db.serialize(()=>{
 		}
 	})
 
-	db.run(dropTableTag, (err)=>{
+	db.run(dropTableCollection, (err)=>{
 		if(err){
-			console.log('failed to drop tag table', err)
+			console.log('failed to drop collection table', err)
 		}else{
-			console.log('dropped tag table')
+			console.log('dropped collection table')
 		}
 	})
 
@@ -58,11 +58,11 @@ db.serialize(()=>{
 		}
 	})
 
-	db.run(createTableTag, (err)=>{
+	db.run(createTableCollection, (err)=>{
 		if(err){
 			console.log('failed to create entry table', err)
 		}else{
-			console.log('created tag table')
+			console.log('created collection table')
 		}
 	})
 
