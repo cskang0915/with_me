@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 class Register extends Component {
 	state = {
-		username: '',
+		display_name: '',
 		email: '',
 		password: '',
 		password2: '',
@@ -33,8 +33,7 @@ class Register extends Component {
 				this.props.history.push('/')
 			}else{
 				console.log(data)
-				debugger
-				alert('Username or email is already taken')
+				// alert('Username or email is already taken')
 			}
 		})
 		.catch(err => {
@@ -50,8 +49,8 @@ class Register extends Component {
 			<div className = "form-register">
 				<form onSubmit = {this.handleSubmit}>
 					<div className = "form-group-register">
-						<label>Username</label>
-						<input type = "username" name = "username" value = {this.state.username} onChange = {this.handleChange} placeholder = "Enter Username"/>
+						<label>Display Name</label>
+						<input type = "username" name = "display_name" value = {this.state.display_name} onChange = {this.handleChange} placeholder = "Enter Display Name"/>
 					</div>
 					<div className = "form-group-register">
 						<label>Email</label>

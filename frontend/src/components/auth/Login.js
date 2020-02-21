@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 class Login extends Component {
 	state = {
-		username: '',
+		email: '',
 		password: '',
 		rowid: '',
 		error: null,
@@ -42,7 +42,8 @@ class Login extends Component {
 				})
 				this.props.history.push(`/profile`)
 			}else{
-				alert('Incorrect username or password')
+				console.log(data)
+				// alert('Incorrect username or password')
 			}
 		})
 		.catch(err => {
@@ -57,8 +58,8 @@ class Login extends Component {
 			<div className = "form-login">
 				<form onSubmit = {this.handleSubmit}>
 					<div className = "form-group-login">
-						<label>Username</label>
-						<input type = "username" name = "username" value = {this.state.username} onChange = {this.handleChange} placeholder = "Enter Username"/>
+						<label>Email</label>
+						<input type = "email" name = "email" value = {this.state.display_name} onChange = {this.handleChange} placeholder = "Enter Username"/>
 					</div>
 					<div className = "form-group-login">
 						<label>Password</label>

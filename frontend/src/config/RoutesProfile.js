@@ -16,8 +16,8 @@ class RoutesProfile extends Component{
 						return <Profile username = {this.props.username} email = {this.props.email} rowid = {this.props.rowid}/>
 					}}/>
 					<Route exact path = '/profile/entry' render = {() => <Redirect to = '/profile/entry/new'/>}/>
-					<Route path = '/profile/entry/new' component = {EntryForm}/>
-					<Route path = '/profile/entry/all' component = {EntryList}/>
+					<Route exact path = '/profile/entry/new' component = {EntryForm}/>
+					<Route exact path = '/profile/entry/all' component = {EntryList}/>
 				</Switch>
 			</BrowserRouter>
 		)

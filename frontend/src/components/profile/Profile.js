@@ -1,13 +1,18 @@
 import React, {Component} from 'react'
 
 class Profile extends Component {
+	state = {
+		username: this.props.username,
+		email: this.props.email,
+		rowid: this.props.rowid
+	}
+
 	render(){
 		return(
 			<div>
-				<p>logged in</p>
-				<p>{this.props.username}</p>
-				<p>{this.props.email}</p>
-				<p>{this.props.rowid}</p>
+				<p>{this.state.username}</p>
+				<p>{this.state.email}</p>
+				<p>{this.state.rowid}</p>
 			</div>
 		)
 	}
