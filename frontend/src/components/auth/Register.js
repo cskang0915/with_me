@@ -20,7 +20,7 @@ class Register extends Component {
 		
 		const newUser = this.state
 
-		fetch('http://localhost:9000/api/user/register', {
+		fetch(`${process.env.REACT_APP_API}/api/user/register`, {
 			method: "POST",
 			body: JSON.stringify(newUser),
 			headers: {

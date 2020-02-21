@@ -17,7 +17,7 @@ export default withRouter(({setCurrentUser, currentUser, logout, history}) => {
 		<div>
 			<Switch>
 				<Route exact path = '/' render = {() => <Login history = {history} setCurrentUser = {setCurrentUser}/>}/>
-				<Route path = '/login' render = {() => <Login history = {history} setCurrentUser = {setCurrentUser}/>}/>
+				<Route path = '/login' render = {() => <Redirect to = '/'/>}/>
 				<Route path = '/register' component = {Register}/>
 				<PrivateRoute path = '/profile' component = {ProfileContainer} logout = {logout}/>
 			</Switch>

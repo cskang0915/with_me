@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 class Entry extends Component {
 	deleteEntry = () => {
-		let url = `http://localhost:9000/api/entry/delete/${this.props.entry.month}/${this.props.entry.day}/${this.props.entry.rowid}`
+		let url = `${process.env.REACT_APP_API}/api/entry/delete/${this.props.entry.month}/${this.props.entry.day}/${this.props.entry.rowid}`
 
 		fetch(url, {
 			method: "DELETE",

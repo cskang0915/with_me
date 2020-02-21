@@ -14,7 +14,7 @@ class ProfileContainer extends Component {
 	}
 
 	getUserInfo = () => {
-		fetch('http://localhost:9000/api/user/info', {
+		fetch(`${process.env.REACT_APP_API}/api/user/info`, {
 			headers: {
 				"authorization": `Bearer ${localStorage.uid}`
 			}

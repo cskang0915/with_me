@@ -28,7 +28,7 @@ class EntryForm extends Component {
 
 		const user = this.state
 	
-		fetch('http://localhost:9000/api/entry/new', {
+		fetch(`${process.env.REACT_APP_API}/api/entry/new`, {
 			method: "POST",
 			body: JSON.stringify(user),
 			headers: {

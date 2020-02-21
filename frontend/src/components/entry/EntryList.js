@@ -19,7 +19,7 @@ class EntryList extends Component {
 	handleSubmit = (event) => {
 		event.preventDefault()
 
-		const url = `http://localhost:9000/api/entry/get/${this.state.month}/${this.state.day}`
+		const url = `${process.env.REACT_APP_API}/api/entry/get/${this.state.month}/${this.state.day}`
 
 		fetch(url, {
 			headers: {
@@ -43,7 +43,7 @@ class EntryList extends Component {
 	}
 
 	getAllEntries = () => {
-		fetch('http://localhost:9000/api/entry/get/all', {
+		fetch(`${process.env.REACT_APP_API}/api/entry/get/all`, {
 			headers: {
 				"Content-Type": "application/json",
 				"authorization": `Bearer ${localStorage.uid}`
@@ -65,7 +65,7 @@ class EntryList extends Component {
 
 	updateDataInEntryList = () => {
 		if(this.state.selectAll === true) {
-			fetch('http://localhost:9000/api/entry/get/all', {
+			fetch(`${process.env.REACT_APP_API}/api/entry/get/all`, {
 				headers: {
 					"Content-Type": "application/json",
 					"authorization": `Bearer ${localStorage.uid}`
@@ -84,7 +84,7 @@ class EntryList extends Component {
 					})
 				})
 		} else {
-			const url = `http://localhost:9000/api/entry/get/${this.state.month}/${this.state.day}`
+			const url = `${process.env.REACT_APP_API}/api/entry/get/${this.state.month}/${this.state.day}`
 
 			fetch(url, {
 				headers: {

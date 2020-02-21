@@ -26,7 +26,7 @@ class Login extends Component {
 
 		const user = this.state
 
-		fetch('http://localhost:9000/api/user/login', {
+		fetch(`${process.env.REACT_APP_API}/api/user/login`, {
 			method: "POST",
 			body: JSON.stringify(user),
 			headers: {
