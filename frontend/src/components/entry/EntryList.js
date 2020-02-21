@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import EntryContainer from '../../containers/entry/EntryContainer'
+import pastEntryContainer from '../../containers/entry/pastEntryContainer'
 
 class EntryList extends Component {
 	state = {
@@ -124,7 +124,7 @@ class EntryList extends Component {
 					<button type = "submit" className = "button-submit">Search Entries</button>
 				</form>
 				<button onClick = {this.getAllEntries}>See All Entries</button>
-				<EntryContainer data = {this.state.data} updateDataInEntryList = {this.updateDataInEntryList}/>
+				<pastEntryContainer data = {this.state.data} updateDataInEntryList = {this.updateDataInEntryList}/>
 			</div>
 		)
 	}

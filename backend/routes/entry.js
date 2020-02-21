@@ -16,9 +16,10 @@ entryRouter.post('/new', authRequired, (req, res) => {
 			req.body.time,
 			req.body.entry,
 			req.body.collection_id,
-			null
+			req.body.picture
 		], (err) => {
 			if(err){
+				console.log(err)
 				return res.status(500).json({
 					status: 500,
 					message: 'something went wrong. try again.'
