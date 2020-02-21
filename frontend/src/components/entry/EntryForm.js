@@ -1,17 +1,39 @@
 import React, {Component} from 'react'
 
 class EntryForm extends Component {
+	date = new Date()
 	state = {
 		user_id: null,
-		month: null,
-		day: null,
-		year: null,
-		time: null,
+		month: this.date.getMonth() + 1,
+		day: this.date.getDate(),
+		year: this.date.getFullYear(),
+		time: `${this.date.getHours()}:${(this.date.getMinutes()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false})}`,
 		entry: '',
-		error: null
+		collection_id: null,
+		picture: null,
+		initial_date: `${this.date.getFullYear()}-${(this.date.getMonth() + 1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false})}-${this.date.getDate()}`,
+		initial_time: `${this.date.getHours()}:${(this.date.getMinutes()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false})}`,
+		test: "",
+		error: null,
 	}
 
 	handleChange = (event) => {
+		if(event.target.name === 'initial_date'){
+			console.log('here')
+			let date = (event.target.value).split('-')
+			console.log(date)
+			this.setState({
+				month: parseInt(date[1]),
+				day: parseInt(date[2]),
+				year: parseInt(date[0])
+			})
+		}else if(event.target.name === 'initial_time'){
+			console.log('there')
+			this.setState({
+				time: event.target.value
+			})
+		}
+
 		this.setState({
 			[event.target.name]: event.target.value
 		})
@@ -19,13 +41,6 @@ class EntryForm extends Component {
 
 	handleSubmit = (event) => {
 		event.preventDefault()
-
-		const date = new Date()
-		this.state.month = date.getMonth() + 1
-		this.state.day = date.getDate()
-		this.state.year = date.getFullYear()
-		this.state.time = date.toLocaleTimeString()
-
 		const user = this.state
 	
 		fetch(`${process.env.REACT_APP_API}/api/entry/new`, {
@@ -51,8 +66,11 @@ class EntryForm extends Component {
 				<h1>Write Entry</h1>
 				<form onSubmit = {this.handleSubmit}>
 					<div className = "form-group-entry">
-						<label>New Entry</label>
-						<input type = "text" name = "entry" value = {this.state.entry} onChange = {this.handleChange} placeholder = "Create a new entry" required/>
+						<label>New Entry</label> <br />
+						<input type = "date" name = "initial_date" value = {this.state.initial_date} onChange = {this.handleChange}/> <br/>
+						<input type = "time" name = "initial_time" value = {this.state.initial_time} onChange = {this.handleChange}/> <br/>
+						<input type = "text" name = "entry" value = {this.state.entry} onChange = {this.handleChange} placeholder = "Create a new entry" required/> <br/>
+						<label>Add to:</label><input type = "text" name = "test" value = {this.state.test} onChange = {this.handleChange} placeholder= "Select a collection"/>
 					</div>
 					<button type = "submit" className = "button-submit">Create entry</button>
 				</form>

@@ -5,7 +5,7 @@ import EntryForm from '../components/entry/EntryForm'
 import EntryList from '../components/entry/EntryList'
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 
-class RoutesProfile extends Component{
+class RoutesProfile extends Component {
 	render() {
 		return(
 			<BrowserRouter>
