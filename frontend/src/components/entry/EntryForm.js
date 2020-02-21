@@ -12,9 +12,51 @@ class EntryForm extends Component {
 		collection_id: null,
 		picture: null,
 		initial_date: `${this.date.getFullYear()}-${(this.date.getMonth() + 1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false})}-${this.date.getDate()}`,
-		initial_time: `${this.date.getHours()}:${(this.date.getMinutes()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false})}`,
+		initial_time: `${(this.date.getHours()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false})}:${(this.date.getMinutes()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false})}`,
 		test: "",
 		error: null,
+	}
+
+	componentDidMount() {
+		this.getAllCollection()
+	}
+
+	getAllCollection = () => {
+		let test = () => {
+			fetch(`${process.env.REACT_APP_API}/api/collection/all`, {
+				headers: {
+					"Content-Type": "application/json",
+					"authorization": `Bearer ${localStorage.uid}`
+				}
+			})
+				.then((res) => res.json())
+				.then((data) => {
+					console.log(data)
+					let findCollection = data.map((collection) => {
+						if(collection.name === this.state.test){
+							this.setState({
+								collection_id: data.rowid
+							})
+						}else{
+							let newCollection = this.state
+							fetch(`${process.env.REACT_APP_API}/api/collection/new`, {
+								method: "POST",
+								body: JSON.stringify(newCollection),
+								headers: {
+									"Content-Type" : "application/json",
+									"authorization": `Bearer ${localStorage.uid}`
+								}
+							})
+							
+								.then((res) => res.json())
+								.then(() => {
+									test()
+								})
+						}
+					})
+				})
+			}
+			test()
 	}
 
 	handleChange = (event) => {
@@ -32,11 +74,11 @@ class EntryForm extends Component {
 			this.setState({
 				time: event.target.value
 			})
+		}else{
+			this.setState({
+				[event.target.name]: event.target.value
+			})
 		}
-
-		this.setState({
-			[event.target.name]: event.target.value
-		})
 	}
 
 	handleSubmit = (event) => {

@@ -6,7 +6,7 @@ const authRequired = require('../middleware/authRequired')
 collectionRouter.post('/new', authRequired, (req, res) => {
   const createNewCollection = 'INSERT INTO collection VALUES (?, ?)'
 
-  database.run(createNewCollection, [req.userId, req.collection_name], (err) => {
+  database.run(createNewCollection, [req.userId, req.body.collection_name], (err) => {
     if(err){
       return res.status(500).json({
         status: 500,
@@ -44,10 +44,11 @@ collectionRouter.get('/get/:id', authRequired, (req, res) => {
   const getOneCollection = `
   SELECT *, collection.rowid FROM collection
   WHERE collection.user_id = ${req.userId}
-  AND collection.rowid = ${req.params.id}`
+  AND collection.collection_name = ${req.params.id}`
 
   database.all(getOneCollection, (err, collection) => {
     if(err){
+      console.log
       return res.status(500).json({
         status: 500,
         message: 'something went wrong. try again'
