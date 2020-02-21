@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import RoutesProfile from '../config/RoutesProfile'
+import RoutesProfile from '../../config/RoutesProfile'
 
 class ProfileContainer extends Component {
 	state = {

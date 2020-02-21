@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Entry from '../components/entry/Entry'
+import Entry from '../../components/entry/Entry'
 
 class EntryContainer extends Component {
 	render() {

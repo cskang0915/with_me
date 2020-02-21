@@ -2,7 +2,7 @@ import React from 'react'
 import {Switch, Route, withRouter, Redirect} from 'react-router-dom'
 import Login from '../components/auth/Login'
 import Register from '../components/auth/Register'
-import ProfileContainer from '../containers/ProfileContainer'
+import ProfileContainer from '../containers/profile/ProfileContainer'
 
 export default withRouter(({setCurrentUser, currentUser, logout, history}) => {
 	const PrivateRoute = ({component: Component, ...rest}) => {

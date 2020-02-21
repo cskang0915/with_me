@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import EntryContainer from '../../containers/EntryContainer'
+import EntryContainer from '../../containers/entry/EntryContainer'
 
 class EntryList extends Component {
 	state = {
