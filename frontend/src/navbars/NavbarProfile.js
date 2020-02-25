@@ -8,13 +8,13 @@ class NavbarProfile extends Component{
 			<div className = "header-profile">
 				<h1>Navigation Bar</h1>
 				<nav className="header-profile-navbar">
-					<div className = "header-profile-link"><Link to = '/profile/user'><button>User Profile</button></Link></div>
-					<div className = "header-profile-link"><Link to = '/profile/entry/new'><button>New Entry</button></Link></div>
-					<div className = "header-profile-link"><Link to = '/profile/view/all'><button>View All Entries</button></Link></div>
-					<div className = "header-profile-link"><Link to = '/profile/view/date'><button>Search By Date</button></Link></div>
-					<div className = "header-profile-link"><Link to = '/profile/view/category'><button>Browse By Category</button></Link></div>
-					<div className = "header-profile-link"><Link to = '/profile/view/map'><button>View Map</button></Link></div>
-					<div className = "header-profile-link"><button onClick = {this.props.logout}>Log out</button></div>
+					<Link to = '/profile/user'>User Profile</Link>
+					<Link to = '/profile/entry/new'>New Entry</Link>
+					<Link to = '/profile/view/all'>View All Entries</Link>
+					<Link to = '/profile/view/category'>Browse By Category</Link>
+					<Link to = '/profile/view/date'>Search By Date</Link>
+					<Link to = '/profile/view/map'>View Map</Link>
+					<Link onClick = {this.props.logout}>Log out</Link>
 				</nav>
 			</div>
 		)

@@ -1,14 +1,11 @@
 import React, {Component} from 'react'
-import EntryList from '../../components/entry/EntryList'
+import SearchEntryContainer from '../search/SearchEntryContainer'
 
 class EntryListContainer extends Component {
-  state = {
-
-  }
   render() {
     return(
       <div>
-        <EntryList search = {this.props.search}/>
+        <SearchEntryContainer search = {this.props.search}/>
       </div>
     )
   }
