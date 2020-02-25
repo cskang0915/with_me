@@ -63,8 +63,10 @@ class EntryContainer extends Component {
 								"authorization": `Bearer ${localStorage.uid}`
 							}
 						})
+							.then(() => {
+								window.location.reload(true)
+							})
 							.catch((err) => console.log(err))
-					// window.location.reload(true)
 				} else {
 					let newCollection = this.state
 					fetch(`${process.env.REACT_APP_API}/api/collection/new`, {
@@ -78,8 +80,6 @@ class EntryContainer extends Component {
 						.then((res) => res.json())
 						.then((data) => {
 							let findCollection = data.find((collection) => collection.collection_name === this.state.test)
-							console.log('here2')
-							console.log(findCollection)
 							if(findCollection) {
 								this.setState({
 									collection_id: findCollection.rowid
@@ -88,7 +88,6 @@ class EntryContainer extends Component {
 						})
 						.then(() => {
 							let test = this.state
-							console.log(test)
 							fetch(`${process.env.REACT_APP_API}/api/entry/new`, {
 								method: "POST",
 								body: JSON.stringify(test),
@@ -98,13 +97,12 @@ class EntryContainer extends Component {
 								}
 							})
 								.then(() => {
-									console.log('here3')
+									window.location.reload(true)
 								})
 								.catch((err) => console.log(err))
 						})
 					}
 				})
-		window.location.reload(true)
 	}
 
 	render() {

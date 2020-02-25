@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import NavbarProfile from '../navbars/NavbarProfile'
 import Profile from '../components/profile/Profile'
 import EntryFormContainer from '../containers/entry/EntryFormContainer'
-import EntryList from '../components/entry/EntryList'
+import EntryListContainer from '../containers/entry/EntryListContainer'
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 
 class RoutesProfile extends Component {
@@ -17,7 +17,9 @@ class RoutesProfile extends Component {
 					}}/>
 					<Route exact path = '/profile/entry' render = {() => <Redirect to = '/profile/entry/new'/>}/>
 					<Route exact path = '/profile/entry/new' component = {EntryFormContainer}/>
-					<Route exact path = '/profile/entry/all' component = {EntryList}/>
+					<Route exact path = '/profile/view/:search' render = {(props) => {
+						return <EntryListContainer search = {props.match.params.search}/>
+					}}/>
 				</Switch>
 			</BrowserRouter>
 		)
