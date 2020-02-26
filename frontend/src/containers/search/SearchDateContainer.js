@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import SearchDate from '../../components/search/SearchDate'
+import SearchDateForm from '../../components/search/SearchDateForm'
 
 class SearchDateContainer extends Component {
   render() {
     return (
       <div>
-        <SearchDate/>
+        <SearchDateForm/>
       </div>
     )
   }

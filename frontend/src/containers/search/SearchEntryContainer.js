@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
 import SearchAllContainer from './SearchAllContainer'
-import SearchCategoryContainer from './SearchCategoryContainer'
+import SearchCollectionContainer from './SearchCollectionContainer'
 import SearchDateContainer from './SearchDateContainer'
 import SearchMapContainer from './SearchMapContainer'
 
 class SearchEntryContainer extends Component {
   render() {
     let searchContainer
-// all, date, category, map
+// all, date, Collection, map
     if(this.props.search === 'all') {
       searchContainer = <SearchAllContainer/>
-    } else if(this.props.search === 'category') {
-      searchContainer = <SearchCategoryContainer/>
+    } else if(this.props.search === 'collection') {
+      searchContainer = <SearchCollectionContainer/>
     } else if(this.props.search === 'date') {
       searchContainer = <SearchDateContainer/>
     } else if(this.props.search === 'map') {

@@ -11,7 +11,7 @@ class EntryForm extends Component {
 						<input type = "date" name = "initial_date" value = {this.props.state.initial_date} onChange = {this.props.handleChange}/> <br/>
 						<input type = "time" name = "initial_time" value = {this.props.state.initial_time} onChange = {this.props.handleChange}/> <br/>
 						<input type = "text" name = "entry" value = {this.props.state.entry} onChange = {this.props.handleChange} placeholder = "Create a new entry" required/> <br/>
-						<label>Add to:</label><input type = "text" name = "test" value = {this.props.state.test} onChange = {this.props.handleChange} placeholder= "Select a collection"/>
+						<label>Add to:</label><input type = "text" name = "collection_name" value = {this.props.state.collection_name} onChange = {this.props.handleChange} placeholder= "Select a collection"/>
 					</div>
 					<button type = "submit" className = "button-submit">Create entry</button>
 				</form>

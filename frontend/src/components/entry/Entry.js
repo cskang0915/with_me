@@ -12,16 +12,16 @@ class Entry extends Component {
 			}
 		})
 		.then(res => res.json())
-		.then(data => {
-			console.log('clicked')
-			if(data.status === 200){
-				console.log('hello')
-			}else {
-				console.log('hi')
-			}
-		})
+		// .then(data => {
+		// 	console.log('clicked')
+		// 	if(data.status === 200){
+		// 		console.log('hello')
+		// 	}else {
+		// 		console.log('hi')
+		// 	}
+		// })
 		.then(() => {
-			this.props.updateDataInEntryList()
+			this.props.updateAllEntry()
 		})
 	}
 
@@ -29,9 +29,10 @@ class Entry extends Component {
 		return (
 			<div>
 				<ul>
-					<li>{this.props.entry.month}/{this.props.entry.day}/{this.props.entry.year}</li>
-					<li>{this.props.entry.time}</li>
-					<li>{this.props.entry.entry}</li>
+					<li>date: {this.props.entry.month}/{this.props.entry.day}/{this.props.entry.year}</li>
+					<li>time: {this.props.entry.time}</li>
+					<li>comment: {this.props.entry.entry}</li>
+					<li>category: {this.props.entry.collection_name}</li>
 					<button onClick = {this.deleteEntry}>Delete</button>
 				</ul>
 			</div>

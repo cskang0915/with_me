@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import SearchMap from '../../components/search/SearchMap'
+import SearchMapForm from '../../components/search/SearchMapForm'
 
 class SearchMapContainer extends Component {
   render() {
     return (
       <div>
-        <SearchMap/>
+        <SearchMapForm/>
       </div>
     )
   }

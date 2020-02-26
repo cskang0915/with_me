@@ -1,11 +1,14 @@
 import React, {Component} from 'react'
-import SearchEntryContainer from '../search/SearchEntryContainer'
+import Entry from '../../components/entry/Entry'
 
 class EntryListContainer extends Component {
   render() {
-    return(
+    let entry = this.props.data.map((entry) => {
+      return <Entry updateAllEntry = {this.props.updateAllEntry} entry = {entry} month = {entry.month} day = {entry.day} rowid = {entry.rowid}/>
+    })
+    return (
       <div>
-        <SearchEntryContainer search = {this.props.search}/>
+        {entry}
       </div>
     )
   }

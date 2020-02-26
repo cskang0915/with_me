@@ -6,7 +6,7 @@ const authRequired = require('../middleware/authRequired')
 collectionRouter.post('/new', authRequired, (req, res) => {
   const createNewCollection = 'INSERT INTO collection VALUES (?, ?)'
 
-  database.run(createNewCollection, [req.userId, req.body.test], (err) => {
+  database.run(createNewCollection, [req.userId, req.body.collection_name], (err) => {
     if(err){
       return res.status(500).json({
         status: 500,

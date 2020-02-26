@@ -13,13 +13,12 @@ class EntryContainer extends Component {
 		picture: null,
 		initial_date: `${this.date.getFullYear()}-${(this.date.getMonth() + 1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false})}-${this.date.getDate()}`,
 		initial_time: `${this.date.getHours()}:${(this.date.getMinutes()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false})}`,
-		test: "",
+		collection_name: "",
 		error: null,
 	}
 
 	handleChange = (event) => {
 		if(event.target.name === 'initial_date'){
-			console.log('here')
 			let date = (event.target.value).split('-')
 			this.setState({
 				month: parseInt(date[1]),
@@ -45,64 +44,88 @@ class EntryContainer extends Component {
 				"authorization": `Bearer ${localStorage.uid}`
 			}
 		})
-			.then((res) => res.json())
-			.then((data) => {
-				let findCollection = data.find((collection) => collection.collection_name === this.state.test)
-				if (findCollection) {
-					this.setState({
-						collection_id: findCollection.rowid
-					})
-					let test = this.state
-						console.log('here')
-						console.log(test)
-						fetch(`${process.env.REACT_APP_API}/api/entry/new`, {
-							method: "POST",
-							body: JSON.stringify(test),
-							headers: {
-								"Content-Type" : "application/json",
-								"authorization": `Bearer ${localStorage.uid}`
-							}
-						})
-							.then(() => {
-								window.location.reload(true)
-							})
-							.catch((err) => console.log(err))
-				} else {
-					let newCollection = this.state
-					fetch(`${process.env.REACT_APP_API}/api/collection/new`, {
+		.then((res) => res.json())
+		.then((data) => {
+			let findCollection = data.find((collection) => collection.collection_name === this.state.collection_name)
+			if (findCollection) {
+				this.setState({
+					collection_id: findCollection.rowid
+				})
+				let collection = this.state
+					fetch(`${process.env.REACT_APP_API}/api/entry/new`, {
 						method: "POST",
-						body: JSON.stringify(newCollection),
+						body: JSON.stringify(collection),
 						headers: {
 							"Content-Type" : "application/json",
 							"authorization": `Bearer ${localStorage.uid}`
 						}
 					})
-						.then((res) => res.json())
-						.then((data) => {
-							let findCollection = data.find((collection) => collection.collection_name === this.state.test)
-							if(findCollection) {
-								this.setState({
-									collection_id: findCollection.rowid
-								})
-							}
+					.then(() => {
+						// window.location.reload(true)
+						this.setState({
+							month: this.date.getMonth() + 1,
+							day: this.date.getDate(),
+							year: this.date.getFullYear(),
+							time: `${this.date.getHours()}:${(this.date.getMinutes()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false})}`,
+							entry: '',
+							collection_id: null,
+							picture: null,
+							initial_date: `${this.date.getFullYear()}-${(this.date.getMonth() + 1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false})}-${this.date.getDate()}`,
+							initial_time: `${this.date.getHours()}:${(this.date.getMinutes()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false})}`,
+							collection_name: "",
+							error: null,
 						})
-						.then(() => {
-							let test = this.state
-							fetch(`${process.env.REACT_APP_API}/api/entry/new`, {
-								method: "POST",
-								body: JSON.stringify(test),
-								headers: {
-									"Content-Type" : "application/json",
-									"authorization": `Bearer ${localStorage.uid}`
-								}
-							})
-								.then(() => {
-									window.location.reload(true)
-								})
-								.catch((err) => console.log(err))
+					})
+					.catch((err) => console.log(err))
+			} else {
+				let newCollection = this.state
+				fetch(`${process.env.REACT_APP_API}/api/collection/new`, {
+					method: "POST",
+					body: JSON.stringify(newCollection),
+					headers: {
+						"Content-Type" : "application/json",
+						"authorization": `Bearer ${localStorage.uid}`
+					}
+				})
+				.then((res) => res.json())
+				.then((data) => {
+					let findCollection = data.find((collection) => collection.collection_name === this.state.collection_name)
+					if(findCollection) {
+						this.setState({
+							collection_id: findCollection.rowid
 						})
 					}
 				})
+				.then(() => {
+					let collection = this.state
+					fetch(`${process.env.REACT_APP_API}/api/entry/new`, {
+						method: "POST",
+						body: JSON.stringify(collection),
+						headers: {
+							"Content-Type" : "application/json",
+							"authorization": `Bearer ${localStorage.uid}`
+						}
+					})
+					.then(() => {
+						// window.location.reload(true)
+						this.setState({
+							month: this.date.getMonth() + 1,
+							day: this.date.getDate(),
+							year: this.date.getFullYear(),
+							time: `${this.date.getHours()}:${(this.date.getMinutes()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false})}`,
+							entry: '',
+							collection_id: null,
+							picture: null,
+							initial_date: `${this.date.getFullYear()}-${(this.date.getMonth() + 1).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false})}-${this.date.getDate()}`,
+							initial_time: `${this.date.getHours()}:${(this.date.getMinutes()).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false})}`,
+							collection_name: "",
+							error: null,
+						})
+					})
+					.catch((err) => console.log(err))
+				})
+			}
+		})
 	}
 
 	render() {

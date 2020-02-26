@@ -207,6 +207,30 @@ entryRouter.get('/get/monthdayyear/:month/:day/:year', authRequired, (req, res) 
 })
 
 // GET by collection
+entryRouter.get('/get/collection/:id', authRequired, (req, res) => {
+	const getByCollection = `
+	SELECT *, entry.rowid FROM entry
+	JOIN collection ON collection.rowid = entry.collection_id
+	WHERE entry.user_id = ${req.userId}
+	AND entry.collection_id = ${req.params.id}
+	`
+
+	database.all(getByCollection, (err, entry) => {
+		if(err) {
+			return res.status(500).json({
+				status: 500,
+				message: 'something went wrong. try again.'
+			})
+		}else if(entry.length === 0){
+			return res.status(200).json({
+				message: 'collection not found'
+			})
+		}else {
+			return res.status(200).json(entry)
+		}
+	})
+
+})
 
 // GET by location
 
